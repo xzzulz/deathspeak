@@ -1,0 +1,117 @@
+okami
+
+v 0.01 initial specs
+
+minimalist programming language.
+
+simple, minimal, expressive, compact syntax.
+often less is more.
+
+
+
+:::::::::::::::::::::::::::
+:: comments
+
+:: this is a comment line
+
+:::::::::::::::::::::::::::
+:: assignment
+
+a:2
+
+:::::::::::::::::::::::::::
+:: function
+
+a:! 
+	a:1
+
+
+
+a: ! 
+	a:1
+	b: #par		:: par
+	^ a + b		:: return
+
+
+:: the last expression is returned
+:: by default
+
+
+:: function call:
+
+a!
+
+:: with parameter:
+:: only one parameter allowed
+
+a!(par)
+
+a: !
+	o: #			:: parameter object
+	a: #a			:: properties of the parameter object
+
+
+:::::::::::::::::::::::::::
+:: object
+
+a: @
+	a: 1				:: public
+	b: #par				:: #par parameter in the constructor
+	*a: 1				:: private
+	*b: 2	
+	*c: *a + *b 		
+
+
+:: prototype:
+
+a: @ (+)b				:: -> "b" is "a" prototype
+
+
+:::::::::::::::::::::::::::
+:: classes 
+:: just a function that return objects
+
+classA: !@ 
+	(+) classB			:: prototype
+	a:1
+	b:2
+	*c:	3 
+	*d:	! fruit: "apple" 	
+	e:	! *c + *d		:: bound this
+	c:	! ~a + ~b		:: slippery this (javascript this)
+
+
+
+:::::::::::::::::::::::::::
+:: conditional
+
+a=b ?			:: if
+	"one"
+/ a>b ?			:: else if
+	"two"
+/				:: else
+	"three"
+
+
+:::::::::::::::::::::::::::
+:: loop
+
+<> a=5?
+	a++	
+	"hello"
+
+:::::::::::::::::::::::::::
+:: operators
+
+= equality
+
+logical:
+& and
+/ or
+>< not
+
+binary:
+`&
+`|
+`><
+
