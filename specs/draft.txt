@@ -1,84 +1,244 @@
 okami
 
-v 0.01 initial specs
-
 minimalist programming language.
+
+v 0.01 initial specs.
+
 
 simple, minimal, expressive, compact syntax.
 often less is more.
 
+this document is a dirty working draft
+
+
 
 
 :::::::::::::::::::::::::::
-:: comments
+:: comments ::
 
 :: this is a comment line
 
-:::::::::::::::::::::::::::
-:: assignment
 
-a:2
 
 :::::::::::::::::::::::::::
-:: function
+:: assignment :
+
+a: 2
+
+
+
+:::::::::::::::::::::::::::
+:: function !
 
 a:! 
 	a:1
 
 
 
+:: function call:
+
+a!
+
+
+
+:: return
+:: ^ is the return symbol
+
 a: ! 
-	a:1
-	b: #par		:: par
-	^ a + b		:: return
+	a: 1			
+	b: 2		
+	^ a + b		:: returns 3
 
 
 :: the last expression is returned
 :: by default
 
+a: ! 2+3
+a!					:: returns 5
 
-:: function call:
 
-a!
 
-:: with parameter:
-:: only one parameter allowed
+:: function with parameter
+:: only one parameter is allowed
 
-a!(par)
+a!(par)				:: @todo: use parents??
 
-a: !
-	o: #			:: parameter object
-	a: #a			:: properties of the parameter object
+walk!(4)
+
+
+
+:: accesing parameters
+
+walk: !
+	# + " steps"		:: # is the parameter object	
+
+walk!(4)				:: returns "4 steps"
+
+
+
+:: multiple parameters
+
+talk: !
+	a: #noun			
+	b: #verb			:: properties of the parameter object
+	a + ' ' + b
+
+talk!(@ noun: "cat", verb: "mews")		:: returns "cat mews"
+										:: parameter is an object
+										:: (see object)
+
+
+
+:: function context
+
+a: ! #a+#b+c
+
+:: where comes "c"??
+:: functions run on their own unique context,
+:: except if they are attached to an object.
+:: when attached into an object, the context 
+:: is the one from the object,
+:: so "c" is equivalent to this.c in that case.
+
+
+
+:: closures
+
+x: "something"
+a: ! 
+	a: ???x		:: function a and var x is a closure
+				:: @todo: define closure syntax here
+
+
+
 
 
 :::::::::::::::::::::::::::
-:: object
+:: objects @
 
 a: @
-	a: 1				:: public
-	b: #par				:: #par parameter in the constructor
-	*a: 1				:: private
-	*b: 2	
-	*c: *a + *b 		
+	a: 1					:: public
+
+	*a: 2					:: private
+	*b: 3	
+	
+	c: a + *b				:: object definition is also
+							:: an execution context.
+							:: "c" is assigned 4.
+
+	*c: *a + *b + a + b		:: private and public are separated
+							:: namespaces. repeated names allowed
+							:: @todo: is this a good idea?
+							:: - yes, for getters and setters
+
+					
+
+:: methods
+:: method are just functions attached to an object,
+:: at compile time or runtime.
+:: the function context is the bound object context.
+:: (the object inside where the method is defined)
+
+b: @
+	a: 1
+	b: 2
+	c: ! a + b				:: return 3
+
+	d: ! x					:: returns undefined
+
+
+
+:: object this
+:: by default, methods variables refer to the 
+:: object context
+:: a single * is the "this" (bound this)
+
+o: @
+	a: 1
+	*a: 2
+		
+	e:	! *a + a		:: returns 3
+
+	c:	! ~a + ~*a		:: returns 3, unless the method
+						:: is attached into another object.
+						:: in that case, ~ refers to the 
+						:: current host object.
+
+	d: ! *				:: returns the object itself
+						:: * is "this" (bound this)
+	
+	e: ! ~				:: return the object to which
+						:: the method is currently attached 
+						:: ~ is "this" (javascript this)
+
+
+
+:: method and function temporary variables .
+:: temporary  variables.
+:: function and method scoped variables.
+:: variables not declared in the owner object,
+:: are temporary variables, discarded on each
+:: method call.
+
+
+o: @
+	a: 1	
+	b: ! c=1		:: c is not defined in the object context,
+					:: thus c exist only temporary, in
+					:: each call to the method.
+
+			
 
 
 :: prototype:
 
-a: @ (+)b				:: -> "b" is "a" prototype
+a: @ (+)b			:: defines an object "a",
+					:: and assign object"b" as a prototype
+
 
 
 :::::::::::::::::::::::::::
-:: classes 
+:: classes (not really)
 :: just a function that return objects
 
-classA: !@ 
-	(+) classB			:: prototype
-	a:1
+classA: !@ 					:: this is valid syntax for a 
+							:: that return an object
+
+	(+) classB				:: prototype
+	(+) classC				:: prototype
+							:: order is important
+							:: later ones overwrite existing members
+
+	b: #par					:: #par parameter in the constructor 
+							:: function
+
+	a:1						:: public
 	b:2
-	*c:	3 
-	*d:	! fruit: "apple" 	
-	e:	! *c + *d		:: bound this
-	c:	! ~a + ~b		:: slippery this (javascript this)
+
+	*c:	3 					:: * marks variables as private
+
+	*d:	! fruit: "apple" 	:: method (private)
+							:: fruit only exist inside the method
+
+
+
+
+:::::::::::::::::::::::::::
+:: getters and setters (not really)
+:: just functions
+
+a: @
+	*a: 0
+	
+	a: ! 
+		#? *a = #				:: setter
+		/  "this is " + *a		:: getter
+
+
+a!2								:: a is assigned 2.
+
+a!								:: returns "this is 2"
+
 
 
 
@@ -92,13 +252,27 @@ a=b ?			:: if
 /				:: else
 	"three"
 
+:: used as an expression
+
+x:1
+a: x=1? 2					:: a is 2
+b: x=2? 3					:: b is false
+
+ab: a=b? "yes" /? "no"		:: ab is "no"
+
 
 :::::::::::::::::::::::::::
-:: loop
+:: loops
 
+a: 0
 <> a=5?
 	a++	
-	"hello"
+	"hello"					:: "hello" five times
+
+
+<>5 "hello"					:: hello five times
+
+
 
 :::::::::::::::::::::::::::
 :: operators
@@ -107,7 +281,7 @@ a=b ?			:: if
 
 logical:
 & and
-/ or
+| or
 >< not
 
 binary:
