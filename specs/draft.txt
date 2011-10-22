@@ -1,14 +1,18 @@
-okami
+:: okami ::
 
-minimalist programming language.
+minimalist programming language,
+on top of javascript.
 
 v 0.01 initial specs.
+this document is a working draft
 
 
-simple, minimal, expressive, compact syntax.
+simple, clean, expressive, compact syntax.
 often less is more.
 
-this document is a dirty working draft
+
+
+
 
 
 
@@ -47,11 +51,13 @@ a!
 a: ! 
 	a: 1			
 	b: 2		
-	^ a + b		:: returns 3
+	^ a + b		
+
+a!					:: returns 3
 
 
-:: the last expression is returned
-:: by default
+:: in a function the last expression
+:: is returned, by default
 
 a: ! 2+3
 a!					:: returns 5
@@ -61,9 +67,9 @@ a!					:: returns 5
 :: function with parameter
 :: only one parameter is allowed
 
-a!(par)				:: @todo: use parents??
+a! par
 
-walk!(4)
+walk! 4				
 
 
 
@@ -72,7 +78,7 @@ walk!(4)
 walk: !
 	# + " steps"		:: # is the parameter object	
 
-walk!(4)				:: returns "4 steps"
+walk! 4					:: returns "4 steps"
 
 
 
@@ -83,31 +89,82 @@ talk: !
 	b: #verb			:: properties of the parameter object
 	a + ' ' + b
 
-talk!(@ noun: "cat", verb: "mews")		:: returns "cat mews"
+talk! @ noun: "cat", verb: "mews"		:: returns "cat mews"
 										:: parameter is an object
 										:: (see object)
+										:: @todo comma as expression 
 
 
 
-:: function context
+:: function context 
 
 a: ! #a+#b+c
 
-:: where comes "c"??
-:: functions run on their own unique context,
-:: except if they are attached to an object.
-:: when attached into an object, the context 
-:: is the one from the object,
-:: so "c" is equivalent to this.c in that case.
+:: the next paragraph is discarded
+
+:: drop :: from where comes "c"??
+:: drop :: functions run on their own unique context,
+:: drop :: except if they are attached to an object.
+:: drop :: when attached into an object, the context 
+:: drop :: is the one from the object,
+:: drop :: so "c" is equivalent to this.c in that case.
+:: drop :: when the context is an object, see "methods"
+:: drop :: for additional details
+
+:: drop :: function context, revision 2: (discarded too)
+::
+:: drop :: functions run on their own context, but any
+:: drop :: variables used, that is also used in the the
+:: drop :: inmediately superior context ( where the function
+:: drop :: was defined ) is referenced from there.
+:: drop :: @todo: review this
+
+:: drop :: pros:
+:: drop :: - methods can refence object variables
+:: drop :: without requiring a "this"
+::
+:: drop :: cons:
+:: drop :: - encourage bad practices
+
+b: @ 
+	a:1 b:2 
+	c:! a + b				
+
+b: @ 
+	a:1 b:2 
+	c:! *a + *b
+
+b: @ 
+	a:1 b:2 
+	c:! @a + @b
+
+
+:: decided:
+::
+:: define two concepts:
+:: ! function
+:: @! method
+
+
+
+:: functions scope
+
+:: functions are pure functions, with no side
+:: effects. 
+:: The function scope is closed. The function 
+:: parameter is the only external data available.
 
 
 
 :: closures
+:: is not possible to form closures using functions.
+:: closures can be formed with methods.
+:: function and method are two different things.
 
 x: "something"
 a: ! 
-	a: ???x		:: function a and var x is a closure
-				:: @todo: define closure syntax here
+	a: x		:: a is assigned "undefined"
+
 
 
 
@@ -133,67 +190,89 @@ a: @
 
 					
 
-:: methods
-:: method are just functions attached to an object,
-:: at compile time or runtime.
-:: the function context is the bound object context.
-:: (the object inside where the method is defined)
+:: methods @!
+:: 
+:: methods are different from functions.
+:: functions are pure functions for functional programming.
+:: methods, are function closures, taking any variable named
+:: in their container scope.
+::
+
+x:2
 
 b: @
 	a: 1
 	b: 2
-	c: ! a + b				:: return 3
 
-	d: ! x					:: returns undefined
+	c: @! a + b
+	c!				:: return 3
+
+	d: @! x					
+	d!				:: returns 2
 
 
 
-:: object this
-:: by default, methods variables refer to the 
-:: object context
-:: a single * is the "this" (bound this)
+:: "this"
+::
+::
+:: * is the "this" object (bound this)
+:: (* is also is the private var namespace)
+::
+:: ~ "dynamic" this
+:: an ~ is the current object to which the method 
+:: is attached at the moment of the call
 
 o: @
-	a: 1
-	*a: 2
+	a:	1
+	b:  4
+	*a:	2				:: private variable
 		
-	e:	! *a + a		:: returns 3
+	e:	@! *a + a		:: will return 3
 
-	c:	! ~a + ~*a		:: returns 3, unless the method
+	f: @! a + b			:: will return 5
+
+
+	c:	@! ~a + ~*a		:: will return 3, unless the method
 						:: is attached into another object.
 						:: in that case, ~ refers to the 
-						:: current host object.
+						:: current host object, and the vars
+						:: are evaluated to that object.
 
-	d: ! *				:: returns the object itself
+
+	d:	@! *			:: will return the object itself
 						:: * is "this" (bound this)
 	
-	e: ! ~				:: return the object to which
+	e:	@! ~			:: will return the object to which
 						:: the method is currently attached 
 						:: ~ is "this" (javascript this)
 
 
 
-:: method and function temporary variables .
-:: temporary  variables.
-:: function and method scoped variables.
-:: variables not declared in the owner object,
-:: are temporary variables, discarded on each
-:: method call.
+:: functions in objects
+::
+:: functions (pure functions) can also be attached to
+:: objects
 
 
 o: @
 	a: 1	
-	b: ! c=1		:: c is not defined in the object context,
-					:: thus c exist only temporary, in
-					:: each call to the method.
+	b: ! a
 
+	b!				:: returns undefined
+
+
+	
 			
 
 
-:: prototype:
+:: prototype
+::
+:: prototype objects are assigned with 
+:: the add prototype operator (+)
 
 a: @ (+)b			:: defines an object "a",
 					:: and assign object"b" as a prototype
+
 
 
 
@@ -201,8 +280,8 @@ a: @ (+)b			:: defines an object "a",
 :: classes (not really)
 :: just a function that return objects
 
-classA: !@ 					:: this is valid syntax for a 
-							:: that return an object
+classA: !@ 					:: this is valid syntax for a function
+							:: that return objects
 
 	(+) classB				:: prototype
 	(+) classC				:: prototype
@@ -217,20 +296,20 @@ classA: !@ 					:: this is valid syntax for a
 
 	*c:	3 					:: * marks variables as private
 
-	*d:	! fruit: "apple" 	:: method (private)
-							:: fruit only exist inside the method
+	*d:	! fruit: "apple" 	:: function (private)
+							:: fruit only exist inside the function
 
 
 
 
 :::::::::::::::::::::::::::
 :: getters and setters (not really)
-:: just functions
+:: just methods
 
 a: @
 	*a: 0
 	
-	a: ! 
+	a: @! 
 		#? *a = #				:: setter
 		/  "this is " + *a		:: getter
 
@@ -238,6 +317,21 @@ a: @
 a!2								:: a is assigned 2.
 
 a!								:: returns "this is 2"
+
+
+:: proposed syntax for getter setters
+
+:: split method definition
+
+
+a: @
+	*a: 0
+	
+	a: @!#					:: method with parameter
+		*a = #				:: setter
+
+	a: @!/					:: method without parameter
+		"this is " + *a		:: getter
 
 
 
@@ -267,12 +361,12 @@ ab: a=b? "yes" /? "no"		:: ab is "no"
 a: 0
 <> a=5?
 	a++	
-	"hello"					:: "hello" five times
+	"hello"						:: "hello" five times
 
 
-<>5 "hello"					:: hello five times
+<>5 "hello"						:: hello five times
 
-
+<>['a','b','c'] " val: " + #	:: "val a val b val c"
 
 :::::::::::::::::::::::::::
 :: operators
