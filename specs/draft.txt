@@ -32,6 +32,64 @@ a: 2
 
 
 :::::::::::::::::::::::::::
+:: conditional
+
+:: if operator ?
+
+a=b ?			:: if
+	"one"
+
+:: else operator /
+::
+:: expr1 / expr2 :: if expr1 is false, evaluates expr2
+
+a=b ?			:: if
+	"one"
+/ a>b ?			:: else if
+	"two"
+/				:: else
+	"three"
+
+:: examples
+
+x:1
+a: x=1? 2					:: a is 2
+b: x=2? 3					:: b is false
+
+ab: a=b? "yes" / "no"		:: ab is "no"
+
+
+:::::::::::::::::::::::::::
+:: loops
+
+a: 0
+<> a=5?
+	a++	
+	"hello"						:: "hello" five times
+
+
+<>5 "hello"						:: hello five times
+
+<>['a','b','c'] " val: " + #	:: "val a val b val c"
+
+:::::::::::::::::::::::::::
+:: operators
+
+= equality
+
+logical:
+& and
+| or
+>< not
+
+binary:
+`&
+`|
+`><
+
+
+
+:::::::::::::::::::::::::::
 :: function !
 
 a:! 
@@ -327,59 +385,63 @@ a!								:: returns "this is 2"
 a: @
 	*a: 0
 	
-	a: @!#					:: method with parameter
+	a: @!.#					:: method with parameter
 		*a = #				:: setter
 
-	a: @!/					:: method without parameter
+	a: @!./					:: method without parameter
 		"this is " + *a		:: getter
 
 
 
-
 :::::::::::::::::::::::::::
-:: conditional
+:: pseudo pattern matching
 
-a=b ?			:: if
-	"one"
-/ a>b ?			:: else if
-	"two"
-/				:: else
-	"three"
+:: factorial
 
-:: used as an expression
-
-x:1
-a: x=1? 2					:: a is 2
-b: x=2? 3					:: b is false
-
-ab: a=b? "yes" /? "no"		:: ab is "no"
+f: !
+	#=0?
+		1
+	/#>0?
+		# * f!(#-1)
+	
 
 
 :::::::::::::::::::::::::::
-:: loops
+:: constants proposed syntaxs
 
-a: 0
-<> a=5?
-	a++	
-	"hello"						:: "hello" five times
+-a-
+.a.
+¢a
 
 
-<>5 "hello"						:: hello five times
 
-<>['a','b','c'] " val: " + #	:: "val a val b val c"
 
 :::::::::::::::::::::::::::
-:: operators
+:: arrays ,
 
-= equality
+:: , is the array operator
 
-logical:
-& and
-| or
->< not
+a: 1,2,3
 
-binary:
-`&
-`|
-`><
+a.+ 2
+
+b: 'a','b','c'
+
+c: ,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
