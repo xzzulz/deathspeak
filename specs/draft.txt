@@ -477,15 +477,17 @@ c: ,
 
 :: ~types associated with names
 
+:: prefixes namespaces...
+
 :: traits @todo
 
-:: idea: type tokens:
+:: type tokens...
 
-:: $ string
-:: # number
-:: ! function
-:: @ object
-
+:: {$}string
+:: #-number
+:: !-function
+:: @-object
+:: -boxes
 
 
 :::::::::::::::::::::::::::
