@@ -104,7 +104,7 @@ a!
 
 
 :: return
-:: ^ is the return symbol
+:: ^ is the return operator
 
 a: ! 
 	a: 1			
@@ -253,7 +253,7 @@ a: @
 :: methods are different from functions.
 :: functions are pure functions for functional programming.
 :: methods, are function closures, taking any variable named
-:: in their container scope.
+:: in their (any? *consider) container scope.
 ::
 
 x:2
@@ -335,10 +335,12 @@ a: @ (+)b			:: defines an object "a",
 
 
 :::::::::::::::::::::::::::
-:: classes (not really)
+::
+::
+:: equivalent of classes
 :: just a function that return objects
 
-classA: !@ 					:: this is valid syntax for a function
+classA: !@					:: this is valid syntax for a function
 							:: that return objects
 
 	(+) classB				:: prototype
@@ -392,6 +394,37 @@ a: @
 		"this is " + *a		:: getter
 
 
+:: another
+
+obj: @
+	*a: 0
+	
+	a: @#!					:: setter (ambiguous?)
+		*a = #				:: 
+
+	a: @#?					:: getter (ambiguous?)
+		"this is " + *a		:: 
+
+obj.#a: 1					:: a setter
+
+b: obj.#a 					:: b is set to 1
+
+
+:: another
+
+obj: @
+	*a: 0
+	
+	a: .#!					:: setter
+		*a = #				:: 
+
+	a: .#?					:: getter (!!)
+		"this is " + *a		:: 
+
+obj.#a: 1					:: a setter
+
+b: obj.#a 					:: b is set to 1
+
 
 :::::::::::::::::::::::::::
 :: pseudo pattern matching
@@ -430,13 +463,50 @@ b: 'a','b','c'
 c: ,
 
 
+:: @todo:
+
+:::::::::::::::::::::::::::
+:: modules pak
+
+:: ~define objects in multiple files
 
 
 
+:::::::::::::::::::::::::::
+:: types
+
+:: ~types associated with names
+
+:: traits @todo
+
+:: idea: type tokens:
+
+:: $ string
+:: # number
+:: ! function
+:: @ object
 
 
 
+:::::::::::::::::::::::::::
+:: docs
 
+:: doc variables
+
+:: int :: from character at index
+from: 2	
+
+:: string :: returns an string of a scream
+scream: ! "argh!"	
+
+:::::::::::::::::::::::::::
+:: other random tests
+
+obj.@a 
+
+obj.-a
+
+obj.*a  
 
 
 

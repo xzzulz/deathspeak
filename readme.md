@@ -19,7 +19,7 @@ okami is not the right way, is just an option.
 
 ## Introduction
 
-For now, see the spec draft
+For now, see the specs draft
 
 
 
