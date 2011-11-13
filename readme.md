@@ -1,8 +1,33 @@
 
 # okami
 
-compact and expressive programming language on top of javascript, for increased productivity
+stylized, compact and expressive programming language on top of 
+javascript, based on clear and precise concepts, for increased 
+productivity.
 
+## about
+
+Symbols in the alphabet have great expressive power, that can 
+succinctly convey ideas.
+
+okami is based on the _subjetive_ perception, that programming 
+languages have left untapped potential, in the expressive power
+of symbols.
+
+okami is an attemp to maximize representation of precise and clear 
+concepts, with the expressive power of symbols.
+
+It is also part of a research project in software design, with 
+goals that will be presented in the future.
+
+## goals
+
+### main goals:
+
+* language based on clear and precise concepts
+* syntax designed to maximize succintness and expressive power
+
+### syntax goals
 
 okami syntax is designed with these goals:
 
@@ -10,18 +35,16 @@ okami syntax is designed with these goals:
 * expressive: agile syntax of expressions.
 * easy to read: compact and noise free syntax that is easier to read.
 * easy to write: agile and compact syntax that is easier to write.
-* simple: based on clear and coherent concepts.
+* simple: based on precise and coherent concepts.
 * comfortable: smaller conceptual footprint for reduced programmer stress.
 
- 
-okami is not the right way, is just an option.
+### license
 
+open source license to be added soon
 
 ## Introduction
 
-For now, see the specs draft
-
-
+For now, see the specs working draft
 
 * More to be added
 
