@@ -1,8 +1,8 @@
 
 # okami
 
-stylized, compact and expressive programming language on top of 
-javascript, based on clear and precise concepts, for increased 
+stylized, compact and expressive programming language on top of  
+javascript, based on clear and precise concepts, for increased  
 productivity.
 
 ## about
