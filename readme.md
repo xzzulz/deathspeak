@@ -7,17 +7,17 @@ productivity.
 
 ## about
 
-Symbols in the alphabet have great expressive power, that can 
+Symbols in the alphabet have great expressive power, that can  
 succinctly convey ideas.
 
-okami is based on the _subjetive_ perception, that programming 
-languages have left untapped potential, in the expressive power
+okami is based on the _subjetive_ perception, that programming  
+languages have left untapped potential, in the expressive power  
 of symbols.
 
-okami is an attemp to maximize representation of precise and clear 
+okami is an attemp to maximize representation of precise and clear  
 concepts, with the expressive power of symbols.
 
-It is also part of a research project in software design, with 
+It is also part of a research project in software design, with  
 goals that will be presented in the future.
 
 ## goals
