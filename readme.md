@@ -5,6 +5,8 @@ stylized, compact and expressive programming language on top of
 javascript, based on clear and precise concepts, for increased  
 productivity.
 
+
+
 ## about
 
 Symbols in the alphabet have great expressive power, that can  
@@ -19,6 +21,12 @@ concepts, with the expressive power of symbols.
 
 It is also part of a research project in software design, with  
 goals that will be presented in the future.
+
+okami is built on top of javascript, because Javascript is  
+rapidly becoming an impressive language, in terms of spread and  
+recently even in performance. And in its quirks, has many hidden  
+gems of expressive power. But suffers from historical baggage  
+and having to please everyone.
 
 ## goals
 
