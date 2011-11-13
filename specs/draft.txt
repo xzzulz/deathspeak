@@ -246,7 +246,9 @@ a: @
 							:: @todo: is this a good idea?
 							:: - yes, for getters and setters
 
-					
+
+b: @ a:1 b:2
+				
 
 :: methods @!
 :: 
@@ -327,6 +329,9 @@ o: @
 ::
 :: prototype objects are assigned with 
 :: the add prototype operator (+)
+::
+:: @todo change this
+
 
 a: @ (+)b			:: defines an object "a",
 					:: and assign object"b" as a prototype
@@ -461,6 +466,12 @@ a.+ 2
 b: 'a','b','c'
 
 c: ,
+
+:: alternative
+
+
+a:[ 1 2 3 ]
+
 
 
 :: @todo:

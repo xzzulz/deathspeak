@@ -9,7 +9,7 @@ productivity.
 
 ## about
 
-Symbols in the alphabet have great expressive power, that can  
+Symbols characters have great expressive power, that can  
 succinctly convey ideas.
 
 okami is based on the _subjetive_ perception, that programming  
@@ -26,7 +26,7 @@ okami is built on top of javascript, because Javascript is
 rapidly becoming an impressive language, in terms of spread and  
 recently even in performance. And in its quirks, has many hidden  
 gems of expressive power. But suffers from historical baggage  
-and having to please everyone.
+and of having to please everyone.
 
 ## goals
 
