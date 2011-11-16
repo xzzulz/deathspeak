@@ -253,8 +253,8 @@ b: @ a:1 b:2
 :: methods @!
 :: 
 :: methods are different from functions.
-:: functions are pure functions for functional programming.
-:: methods, are function closures, taking any variable named
+:: functions are pure functions with no side effects.
+:: methods, are closures, taking any variable named
 :: in their (any? *consider) container scope.
 ::
 
@@ -269,6 +269,11 @@ b: @
 
 	d: @! x					
 	d!				:: returns 2
+
+	e:!  y:5  a + b + y 
+
+	e:! a + *b + c
+	
 
 
 
@@ -322,6 +327,7 @@ o: @
 
 
 	
+
 			
 
 
@@ -472,7 +478,17 @@ c: ,
 
 a:[ 1 2 3 ]
 
+l:[ a b c d ]
 
+:: string arrays
+
+l:[' one two three four ']
+
+l:	['
+	red color
+	blue color
+	green color
+	']
 
 :: @todo:
 
@@ -520,6 +536,45 @@ obj.@a
 obj.-a
 
 obj.*a  
+
+
+
+:::::::::::::::::::::::::::
+
+
+
+
+@ shapes:
+	
+	@: a:1 b:2
+	!: 
+	
+	! paint:
+		gx.draw.box ! *square
+	
+	
+	*@ square:
+		x: 0, y: 0
+		w: 4, h: 4
+		color: "#56b286"
+
+		area: ! w `* h
+		
+		! data
+			
+	name: "shapes"
+	
+	*@! action: 
+		a+b
+		
+	! * square
+
+
+
+
+
+
+
 
 
 
