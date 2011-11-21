@@ -58,7 +58,7 @@ easy at first. it is designed with these goals:
 * simple: based on simple, precise and coherent concepts.
 * comfortable: smaller conceptual footprint for reduced programmer stress.
 
-### license
+## license
 
 open source license to be added soon
 

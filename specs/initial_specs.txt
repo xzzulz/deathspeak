@@ -1,0 +1,738 @@
+:: okami ::
+
+:: Initial specs
+
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: literals
+
+
+:: booleans
+
+:: true	+
+:: false 	-
+
+tru: +
+fal: -
+
+
+:: arrays
+
+	&
+
+:: array of variables:
+
+values: &-a-b-c
+
+:: is the same as:
+
+values: &
+	- a
+	- b
+	- c
+
+numbers: -1-2-3
+
+
+:: array of strings:
+
+	&$
+	
+:: starting with &$ means that arrays elements will be
+:: interpreted as strings (white space at both ends is trimmed)
+
+colors: &$
+	- red
+	- green
+	- blue
+
+:: is the same as:
+
+colors: -"red"-"green"-"blue"
+
+
+
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: comments 
+
+	::
+
+
+:: Examples:
+
+:: this is a comment line
+
+
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: assignment 
+
+	:
+
+expr1 : expr2
+
+:: assign the result of expr2 to expr1.
+:: whole expression evaluates to expr1.
+
+:: Examples:
+
+a: 2
+
+
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: conditional operator "if" 
+	
+	?
+	
+expr1 ? expr2
+
+:: if expr1 evals to true, evaluates expr2 .
+:: whole expression evaluates to true or false, based on expr1.
+
+:: Examples:
+
+a=b ?	c:"one"			
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: else operator
+
+	/
+
+expr1 / expr2 
+
+:: evaluates expr1. if expr1 is false, evaluates expr2.
+:: whole expression if expr1 is false, evaluates to true or false, 
+:: based on expr2. 
+:: if expr1 is true, whole expression evaluates to true.
+:: if expr1 is false, whole expression evaluates to true or false
+:: based on expr2.
+
+:: examples
+
+a=1 ?			
+	"one"
+/ a=2 ?			
+	"two"
+/ a=3 ?			
+	"three"
+/
+	"four or more"
+
+
+
+:::::::::::::::::::::::::::
+:: loops
+
+	expr1 <> expr2
+
+:: if expr1 is boolean, loops expr2 while expr1 is true.
+:: if expr1 is a number n, loops expr2 n times.
+:: if expr1 is an array, loop over each element of the array
+:: if expr1 is an object, loop over object own properties 
+
+
+
+
+
+colors: `-blue-red-green-yellow
+
+colors <> 
+	index: #-
+	color: #*
+
+
+:::::::::::::::::::::::::::
+:: operators
+
+= equality
+
+logical:
+& and
+| or
+>< not
+
+binary:
+`&
+`|
+`><
+
+
+
+:::::::::::::::::::::::::::
+:: function !
+
+:: functions are pure functions with no side effects.
+
+
+! a:
+
+a:! 
+	a:1
+
+
+
+:: function call:
+
+a!
+
+
+
+:: return
+:: ^ is the return operator
+
+a: ! 
+	a: 1			
+	b: 2		
+	^ a + b		
+
+a!					:: returns 3
+
+
+:: in a function the last expression
+:: is returned, by default
+
+a: ! 2+3
+a!					:: returns 5
+
+
+
+:: function with parameter
+:: only one parameter is allowed
+
+a! par
+
+walk! 4				
+
+
+
+:: accesing parameters
+
+walk: !
+	# + " steps"		:: # is the parameter object	
+
+walk! 4					:: returns "4 steps"
+
+
+
+:: multiple parameters
+
+talk: !
+	a: #noun			
+	b: #verb			:: properties of the parameter object
+	a + ' ' + b
+
+talk! @ noun: "cat", verb: "mews"		:: returns "cat mews"
+										:: parameter is an object
+										:: (see object)
+										:: @todo comma as expression 
+
+
+
+:: function context 
+
+a: ! #a+#b+c
+
+:: the next paragraph is discarded
+
+:: drop :: from where comes "c"??
+:: drop :: functions run on their own unique context,
+:: drop :: except if they are attached to an object.
+:: drop :: when attached into an object, the context 
+:: drop :: is the one from the object,
+:: drop :: so "c" is equivalent to this.c in that case.
+:: drop :: when the context is an object, see "methods"
+:: drop :: for additional details
+
+:: drop :: function context, revision 2: (discarded too)
+::
+:: drop :: functions run on their own context, but any
+:: drop :: variables used, that is also used in the the
+:: drop :: inmediately superior context ( where the function
+:: drop :: was defined ) is referenced from there.
+:: drop :: @todo: review this
+
+:: drop :: pros:
+:: drop :: - methods can refence object variables
+:: drop :: without requiring a "this"
+::
+:: drop :: cons:
+:: drop :: - encourage bad practices
+
+b: @ 
+	a:1 b:2 
+	c:! a + b				
+
+b: @ 
+	a:1 b:2 
+	c:! *a + *b
+
+b: @ 
+	a:1 b:2 
+	c:! @a + @b
+
+
+:: decided:
+::
+:: define two concepts:
+:: ! function
+:: @! method
+
+
+
+:: functions scope
+
+:: functions are pure functions, with no side
+:: effects. 
+:: The function scope is closed. The function 
+:: parameter is the only external data available.
+
+
+
+:: closures
+:: is not possible to form closures using functions.
+:: closures can be formed with methods.
+:: function and method are two different things.
+
+x: "something"
+a: ! 
+	a: x		:: a is assigned "undefined"
+
+
+
+
+
+
+:::::::::::::::::::::::::::
+:: objects @
+
+a: @
+	.a: 1					:: public
+	.b: 2
+	
+	a: 2					:: private
+	b: 3	
+
+	
+	c: a + b				:: object definition is also
+						:: an execution context.
+						:: "c" is assigned 5.
+
+	c: .a + .b + a + b		:: private and public are separated
+						:: namespaces.
+
+	d: @! a:. b
+	
+
+b: @ a:1 b:2
+				
+
+:: methods @!
+:: 
+:: methods have access to object properties
+::
+
+x:2
+
+b: @
+	a: 1				:: private
+	b: 2
+
+	c: ! a + b
+	c!				:: return 3
+
+	*d: @! x					
+	d!				:: returns 2
+
+	e:!  _y:5  a + b + _y 	:: _local var operator, only inside 
+					:: the method
+
+	e:! a + .b + c + _d
+	
+	
+	f:@! a + b + *c + *d + e + f
+
+	g:@! a:*@ b
+
+:: "this"
+::
+::
+:: *@ is the "this" object (bound this)
+:: (* is also is the private var namespace)
+::
+:: ~ "dynamic" this
+:: an ~ is the current object to which the method 
+:: is attached at the moment of the call
+
+o: @
+	a:	1
+	b:  4
+	*a:	2				:: private variable
+		
+	e:	@! *a + a		:: will return 3
+
+	f: @! a + b			:: will return 5
+
+
+	c:	@! ~a + ~*a		:: will return 3, unless the method
+						:: is attached into another object.
+						:: in that case, ~ refers to the 
+						:: current host object, and the vars
+						:: are evaluated to that object.
+
+
+	d:	@! .@			:: will return the object itself
+					:: * is "this" (bound this)
+	
+	e:	@! ~			:: will return the object to which
+					:: the method is currently attached 
+					:: ~ is "this" (javascript this)
+
+
+
+:: functions in objects
+::
+:: functions (pure functions) can also be attached to
+:: objects
+
+
+o: @
+	a: 1	
+	b: ! a
+
+	b!				:: returns undefined
+
+
+	
+
+	
+
+
+:: prototype
+::
+:: prototype objects are assigned with 
+:: the add prototype operator (+)
+::
+:: @todo change this
+
+
+a: @ (+)b				:: defines an object "a",
+					:: and assign object"b" as a prototype
+
+
+
+
+:::::::::::::::::::::::::::
+::
+::
+:: equivalent of classes
+:: just a function that return objects
+
+classA: !@					:: this is valid syntax for a function
+							:: that return objects
+
+	(+) classB				:: prototype
+	(+) classC				:: prototype
+							:: order is important
+							:: later ones overwrite existing members
+
+	b: #par					:: #par parameter in the constructor 
+							:: function
+
+	a:1						:: public
+	b:2
+
+	*c:	3 					:: * marks variables as private
+
+	*d:	! fruit: "apple" 	:: function (private)
+							:: fruit only exist inside the function
+
+
+
+:::::::::::::::::::::::::::
+:: getters and setters (not really)
+:: just methods
+
+a: @
+	*a: 0
+	
+	a: @! 
+		#? *a = #				:: setter
+		/  "this is " + *a		:: getter
+
+
+a!2								:: a is assigned 2.
+
+a!								:: returns "this is 2"
+
+
+:: proposed syntax for getter setters
+
+:: split method definition
+
+
+a: @
+	*a: 0
+	
+	a: @!.#					:: method with parameter
+		*a = #				:: setter
+
+	a: @!./					:: method without parameter
+		"this is " + *a		:: getter
+
+
+:: another
+
+obj: @
+	*a: 0
+	
+	a: @#!					:: setter (ambiguous?)
+		*a = #				:: 
+
+	a: @#?					:: getter (ambiguous?)
+		"this is " + *a		:: 
+
+obj.#a: 1					:: a setter
+
+b: obj.#a 					:: b is set to 1
+
+
+:: another
+
+obj: @
+	*a: 0
+	
+	a: .#!					:: setter
+		*a = #				:: 
+
+	a: .#?					:: getter (!!)
+		"this is " + *a		:: 
+
+obj.#a: 1					:: a setter
+
+b: obj.#a 					:: b is set to 1
+
+
+:::::::::::::::::::::::::::
+:: pseudo pattern matching
+
+:: factorial
+
+f: !
+	#=0?
+		1
+	/#>0?
+		# * f!(#-1)
+	
+
+
+:::::::::::::::::::::::::::
+:: constants proposed syntaxs
+
+-a-
+.a.
+¢a
+
+
+
+
+:::::::::::::::::::::::::::
+:: arrays ,
+
+:: , is the array operator
+
+a: 1,2,3
+
+a.+ 2
+
+b: 'a','b','c'
+
+c: ,
+
+e: a,b,c
+
+e: *a *b *c
+
+
+:: alternative
+
+array: &-a-b-c-d 			best
+
+array: -a-b-c
+
+
+a:[ 1 2 3 ]
+
+l:[ a b c d ]
+
+:: string arrays
+
+l:[' one two three four ']
+
+l:	['
+	red color
+	blue color
+	green color
+	']
+
+
+
+
+:: @todo:
+
+:::::::::::::::::::::::::::
+:: modules pak
+
+:: ~define objects in multiple files
+
+
+
+:::::::::::::::::::::::::::
+:: types
+
+:: ~types associated with names
+
+:: prefixes namespaces...
+
+:: traits @todo
+
+:: type tokens...
+
+:: $-string
+:: #-number
+:: !-function
+:: @!-method
+:: @-object
+:: *-array
+:: %-bool
+
+
+:::::::::::::::::::::::::::
+:: docs
+
+:: doc variables
+
+:: int :: from character at index
+from: 2	
+
+:: string :: returns an string of a scream
+scream: ! "argh!"	
+
+
+:::::::::::::::::::::::::::
+:: operators
+
+:: operators definition 
+
+obj: @
+	
+	a: 2
+	
+	>.+ a+#
+	
+	
+obj.+ 4			:: returns 6
+
+:: must start with symbol
+:: when using, requires a space at the end
+:: next identity is taken as parameter
+
+
+:::::::::::::::::::::::::::
+:: other random tests
+
+obj.@a 
+
+obj.-a
+
+obj.*a  
+
+
+
+:::::::::::::::::::::::::::
+
+
+@ a:1 b:2
+
+
+
+
+painter: @
+	
+	
+	types:
+		- square 
+		- circle	
+		- triangle
+		
+		
+	shapes: -
+	
+
+	* square : @!
+		
+		shapes.+! @
+			* type : "circle"
+			* x : 0  
+			* y : 0
+			* w : 4  
+			* h : 4
+			* color : "#56b286"
+		
+		shapes
+				
+		
+		
+	* circle : @!
+		
+		shapes.push! @
+		
+			* x : 0  
+			* y : 0
+			* w : 4  
+			* h : 4
+			* color: "#56b286"		
+
+	
+	
+	square: @
+
+		new: ! @
+			x:0  y:0
+			w:4  h:4
+			color: "#56b286"			
+			
+			@! area:
+				w * h
+	
+	
+		
+	name: "shapes"
+	
+	
+:::::::::::::::::::::::::::::::::::::::::::::::::	
+
+
+@ painter:
+
+	shapes: &
+	
+	* @! square: 
+		shapes + @
+			* x:0  
+			* y:0
+			* w:4  
+			* h:4
+			* color: "#56b286"
+		
+
+	* @! circle
+
+
+
+
+
+
+
+
