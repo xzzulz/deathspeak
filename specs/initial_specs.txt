@@ -9,8 +9,12 @@
 
 :: booleans
 
+	+ -
+
 :: true	+
 :: false 	-
+
+Example
 
 tru: +
 fal: -
@@ -18,7 +22,7 @@ fal: -
 
 :: arrays
 
-	&
+	&-
 
 :: array of variables:
 
@@ -31,12 +35,12 @@ values: &
 	- b
 	- c
 
-numbers: -1-2-3
+numbers: &-1-2-3
 
 
 :: array of strings:
 
-	&$
+	&$-
 	
 :: starting with &$ means that arrays elements will be
 :: interpreted as strings (white space at both ends is trimmed)
@@ -132,172 +136,71 @@ a=1 ?
 :: if expr1 is an array, loop over each element of the array
 :: if expr1 is an object, loop over object own properties 
 
+:: for numeric loops, #- is the index
+:: for array loops, #- is the key, #* is the value
+:: for objects loops, #- is the key, #* is the value
 
-
-
+:: Example
 
 colors: `-blue-red-green-yellow
 
 colors <> 
-	index: #-
+	key: #-
 	color: #*
+
 
 
 :::::::::::::::::::::::::::
 :: operators
 
-= equality
+ 
+:: equality
 
-logical:
+=
+
+
+:: logical:
+
 & and
-| or
+% or
 >< not
 
-binary:
+:: binary:
+
 `&
-`|
+`%
 `><
 
 
 
 :::::::::::::::::::::::::::
-:: function !
+:: functions 
 
-:: functions are pure functions with no side effects.
+	!
 
+:: creation:
 
-! a:
+! expr
 
-a:! 
-	a:1
+:: makes expr a function
+:: execution:
 
+expr1 ! expr2
 
+:: expr1 must be or eval to a function, then is executed and
+:: expr2 is passed as a parameter, accesable inside the function 
+:: with #. 
+:: last expression is returned, or at the ^ symbol.
 
-:: function call:
+:: Examples
 
-a!
+f: ! a:2 b:1 a+b
 
-
-
-:: return
-:: ^ is the return operator
-
-a: ! 
-	a: 1			
-	b: 2		
-	^ a + b		
-
-a!					:: returns 3
+f! 
+	
+g: ! #a + #b
 
 
-:: in a function the last expression
-:: is returned, by default
-
-a: ! 2+3
-a!					:: returns 5
-
-
-
-:: function with parameter
-:: only one parameter is allowed
-
-a! par
-
-walk! 4				
-
-
-
-:: accesing parameters
-
-walk: !
-	# + " steps"		:: # is the parameter object	
-
-walk! 4					:: returns "4 steps"
-
-
-
-:: multiple parameters
-
-talk: !
-	a: #noun			
-	b: #verb			:: properties of the parameter object
-	a + ' ' + b
-
-talk! @ noun: "cat", verb: "mews"		:: returns "cat mews"
-										:: parameter is an object
-										:: (see object)
-										:: @todo comma as expression 
-
-
-
-:: function context 
-
-a: ! #a+#b+c
-
-:: the next paragraph is discarded
-
-:: drop :: from where comes "c"??
-:: drop :: functions run on their own unique context,
-:: drop :: except if they are attached to an object.
-:: drop :: when attached into an object, the context 
-:: drop :: is the one from the object,
-:: drop :: so "c" is equivalent to this.c in that case.
-:: drop :: when the context is an object, see "methods"
-:: drop :: for additional details
-
-:: drop :: function context, revision 2: (discarded too)
-::
-:: drop :: functions run on their own context, but any
-:: drop :: variables used, that is also used in the the
-:: drop :: inmediately superior context ( where the function
-:: drop :: was defined ) is referenced from there.
-:: drop :: @todo: review this
-
-:: drop :: pros:
-:: drop :: - methods can refence object variables
-:: drop :: without requiring a "this"
-::
-:: drop :: cons:
-:: drop :: - encourage bad practices
-
-b: @ 
-	a:1 b:2 
-	c:! a + b				
-
-b: @ 
-	a:1 b:2 
-	c:! *a + *b
-
-b: @ 
-	a:1 b:2 
-	c:! @a + @b
-
-
-:: decided:
-::
-:: define two concepts:
-:: ! function
-:: @! method
-
-
-
-:: functions scope
-
-:: functions are pure functions, with no side
-:: effects. 
-:: The function scope is closed. The function 
-:: parameter is the only external data available.
-
-
-
-:: closures
-:: is not possible to form closures using functions.
-:: closures can be formed with methods.
-:: function and method are two different things.
-
-x: "something"
-a: ! 
-	a: x		:: a is assigned "undefined"
 
 
 
