@@ -218,30 +218,23 @@ g: ! #a + #b
 :: inside the object blok, these rules apply:
 
 :: - vars definitions are properties of the object
-
-:: - private identifiers are preceded with an *
-
+:: - public identifiers are preceded with an *
+:: - private identifiers are preceded with nothing
 :: - private and public are separated namespaces
 ::   that means that there can be private vars with the
 ::   same name than public ones
 
 
-:: Examples
+:: Example:
 
-
-
-a: @
-	a: 1					
-	b: 2
+robot: @ 
+	* name: "bot"
+	* color: "blue"
+	* speed: 10				
+	password: "oil"
 	
-	*a: 2					
-	*b: 3	
-
 	
-b: @ a:1 b:2
-				
-				
-				
+	
 				
 :::::::::::::::::::::::::::
 :: methods 
@@ -264,223 +257,48 @@ expr1 @! expr2
 :: inside the function with #. 
 :: last expression is returned, or at the ^ symbol.
 
-:: inside method, some rules apply:
+:: inside method, these rules apply:
 
-:: - variables refered are instance vars from the object
-::   if they are defined in the object, else they are
-::   
-:: - * preceded vars are private vars of the object
+:: - variables referred are instance vars from the object
+:: - _ preceded vars are method scoped vars
+:: - * preceded vars are public vars of the object
+:: - nothing preceded vars are private vars of the object
 :: - ~ preceded, are public vars from the guest object
-:: - _ preceded vars are local vars of the running context
-
+:: - *@ refer to the object (bound this)
+:: - ~@ refer to guest object (js this)
 
 :: Examples
 
-m: @! a:2 b:1 a+b
-
-m! 
-	
-m: @! #a + #b
-
-
-
-
-
-:: methods have access to object properties
-::
-
-x:2
-
-b: @
-	a: 1				:: private
-	b: 2
-
-	c: ! a + b
-	c!				:: return 3
-
-	*d: @! x					
-	d!				:: returns 2
-
-	e:!  _y:5  a + b + _y 	:: _local var operator, only inside 
-					:: the method
-
-	e:! a + .b + c + _d
-	
-	
-	f:@! a + b + *c + *d + e + f
-
-	g:@! a:*@ b
-
-:: "this"
-::
-::
-:: *@ is the "this" object (bound this)
-:: (* is also is the private var namespace)
-::
-:: ~ "dynamic" this
-:: an ~ is the current object to which the method 
-:: is attached at the moment of the call
-
-o: @
-	a:	1
-	b:  4
-	*a:	2				:: private variable
-		
-	e:	@! *a + a		:: will return 3
-
-	f: @! a + b			:: will return 5
-
-
-	c:	@! ~a + ~*a		:: will return 3, unless the method
-						:: is attached into another object.
-						:: in that case, ~ refers to the 
-						:: current host object, and the vars
-						:: are evaluated to that object.
-
-
-	d:	@! .@			:: will return the object itself
-					:: * is "this" (bound this)
-	
-	e:	@! ~			:: will return the object to which
-					:: the method is currently attached 
-					:: ~ is "this" (javascript this)
-
-
-
-:: functions in objects
-::
-:: functions (pure functions) can also be attached to
-:: objects
-
-
-o: @
-	a: 1	
-	b: ! a
-
-	b!				:: returns undefined
-
-
-	
-
-	
-
-
-:: prototype
-::
-:: prototype objects are assigned with 
-:: the add prototype operator (+)
-::
-:: @todo change this
-
-
-a: @ (+)b				:: defines an object "a",
-					:: and assign object"b" as a prototype
-
+m: @! 
+	a: 2 
+	* b: 1 
+	~ c: 3 
+	_ d: 4 
 
 
 
 :::::::::::::::::::::::::::
-::
-::
-:: equivalent of classes
-:: just a function that return objects
+:: getters & setters
 
-classA: !@					:: this is valid syntax for a function
-							:: that return objects
+:: getter
 
-	(+) classB				:: prototype
-	(+) classC				:: prototype
-							:: order is important
-							:: later ones overwrite existing members
+	@!<-
 
-	b: #par					:: #par parameter in the constructor 
-							:: function
+:: setters 
 
-	a:1						:: public
-	b:2
+	@!->
 
-	*c:	3 					:: * marks variables as private
-
-	*d:	! fruit: "apple" 	:: function (private)
-							:: fruit only exist inside the function
-
-
-
-:::::::::::::::::::::::::::
-:: getters and setters (not really)
-:: just methods
+:: Example:
 
 a: @
-	*a: 0
+	a: 0
 	
-	a: @! 
-		#? *a = #				:: setter
-		/  "this is " + *a		:: getter
+	*a: @!->	
+		*a = #				
 
+	*a: @!<-
+		^ a
 
-a!2								:: a is assigned 2.
-
-a!								:: returns "this is 2"
-
-
-:: proposed syntax for getter setters
-
-:: split method definition
-
-
-a: @
-	*a: 0
-	
-	a: @!.#					:: method with parameter
-		*a = #				:: setter
-
-	a: @!./					:: method without parameter
-		"this is " + *a		:: getter
-
-
-:: another
-
-obj: @
-	*a: 0
-	
-	a: @#!					:: setter (ambiguous?)
-		*a = #				:: 
-
-	a: @#?					:: getter (ambiguous?)
-		"this is " + *a		:: 
-
-obj.#a: 1					:: a setter
-
-b: obj.#a 					:: b is set to 1
-
-
-:: another
-
-obj: @
-	*a: 0
-	
-	a: .#!					:: setter
-		*a = #				:: 
-
-	a: .#?					:: getter (!!)
-		"this is " + *a		:: 
-
-obj.#a: 1					:: a setter
-
-b: obj.#a 					:: b is set to 1
-
-
-:::::::::::::::::::::::::::
-:: pseudo pattern matching
-
-:: factorial
-
-f: !
-	#=0?
-		1
-	/#>0?
-		# * f!(#-1)
-	
 
 
 :::::::::::::::::::::::::::
