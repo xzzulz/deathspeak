@@ -180,16 +180,17 @@ colors <>
 
 :: creation:
 
-! expr
+! block
 
-:: makes expr a function
+:: makes a function with block
+
 :: execution:
 
 expr1 ! expr2
 
 :: expr1 must be or eval to a function, then is executed and
-:: expr2 is passed as a parameter, accesable inside the function 
-:: with #. 
+:: if expr2 is provided, is passed as a parameter, accesable 
+:: inside the function with #. 
 :: last expression is returned, or at the ^ symbol.
 
 :: Examples
@@ -203,36 +204,88 @@ g: ! #a + #b
 
 
 
-
-
-
-
 :::::::::::::::::::::::::::
-:: objects @
+:: objects
+
+	@
+
+:: definition:
+	
+@ block
+
+:: defines an object using block
+
+:: inside the object blok, these rules apply:
+
+:: - vars definitions are properties of the object
+
+:: - private identifiers are preceded with an *
+
+:: - private and public are separated namespaces
+::   that means that there can be private vars with the
+::   same name than public ones
+
+
+:: Examples
+
+
 
 a: @
-	.a: 1					:: public
-	.b: 2
+	a: 1					
+	b: 2
 	
-	a: 2					:: private
-	b: 3	
+	*a: 2					
+	*b: 3	
 
 	
-	c: a + b				:: object definition is also
-						:: an execution context.
-						:: "c" is assigned 5.
-
-	c: .a + .b + a + b		:: private and public are separated
-						:: namespaces.
-
-	d: @! a:. b
-	
-
 b: @ a:1 b:2
 				
+				
+				
+				
+:::::::::::::::::::::::::::
+:: methods 
 
-:: methods @!
-:: 
+	@!
+
+:: creation:
+
+@! block
+
+:: makes a method with block
+
+:: execution:
+
+expr1 @!
+expr1 @! expr2
+
+:: expr1 must be or eval to a method, then is executed and
+:: if expr2 is provided, is passed as a parameter, accesable 
+:: inside the function with #. 
+:: last expression is returned, or at the ^ symbol.
+
+:: inside method, some rules apply:
+
+:: - variables refered are instance vars from the object
+::   if they are defined in the object, else they are
+::   
+:: - * preceded vars are private vars of the object
+:: - ~ preceded, are public vars from the guest object
+:: - _ preceded vars are local vars of the running context
+
+
+:: Examples
+
+m: @! a:2 b:1 a+b
+
+m! 
+	
+m: @! #a + #b
+
+
+
+
+
 :: methods have access to object properties
 ::
 
