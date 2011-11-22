@@ -20,6 +20,14 @@ tru: +
 fal: -
 
 
+:: strings
+
+"abc
+def
+ghi"
+
+
+
 :: arrays
 
 	&-
@@ -153,6 +161,9 @@ colors <>
 :::::::::::::::::::::::::::
 :: operators
 
+:: math
+
+`+ `- `* `/
  
 :: equality
 
@@ -277,231 +288,6 @@ m: @!
 
 
 
-:::::::::::::::::::::::::::
-:: getters & setters
-
-:: getter
-
-	@!<-
-
-:: setters 
-
-	@!->
-
-:: Example:
-
-a: @
-	a: 0
-	
-	*a: @!->	
-		*a = #				
-
-	*a: @!<-
-		^ a
-
-
-
-:::::::::::::::::::::::::::
-:: constants proposed syntaxs
-
--a-
-.a.
-¢a
-
-
-
-
-:::::::::::::::::::::::::::
-:: arrays ,
-
-:: , is the array operator
-
-a: 1,2,3
-
-a.+ 2
-
-b: 'a','b','c'
-
-c: ,
-
-e: a,b,c
-
-e: *a *b *c
-
-
-:: alternative
-
-array: &-a-b-c-d 			best
-
-array: -a-b-c
-
-
-a:[ 1 2 3 ]
-
-l:[ a b c d ]
-
-:: string arrays
-
-l:[' one two three four ']
-
-l:	['
-	red color
-	blue color
-	green color
-	']
-
-
-
-
-:: @todo:
-
-:::::::::::::::::::::::::::
-:: modules pak
-
-:: ~define objects in multiple files
-
-
-
-:::::::::::::::::::::::::::
-:: types
-
-:: ~types associated with names
-
-:: prefixes namespaces...
-
-:: traits @todo
-
-:: type tokens...
-
-:: $-string
-:: #-number
-:: !-function
-:: @!-method
-:: @-object
-:: *-array
-:: %-bool
-
-
-:::::::::::::::::::::::::::
-:: docs
-
-:: doc variables
-
-:: int :: from character at index
-from: 2	
-
-:: string :: returns an string of a scream
-scream: ! "argh!"	
-
-
-:::::::::::::::::::::::::::
-:: operators
-
-:: operators definition 
-
-obj: @
-	
-	a: 2
-	
-	>.+ a+#
-	
-	
-obj.+ 4			:: returns 6
-
-:: must start with symbol
-:: when using, requires a space at the end
-:: next identity is taken as parameter
-
-
-:::::::::::::::::::::::::::
-:: other random tests
-
-obj.@a 
-
-obj.-a
-
-obj.*a  
-
-
-
-:::::::::::::::::::::::::::
-
-
-@ a:1 b:2
-
-
-
-
-painter: @
-	
-	
-	types:
-		- square 
-		- circle	
-		- triangle
-		
-		
-	shapes: -
-	
-
-	* square : @!
-		
-		shapes.+! @
-			* type : "circle"
-			* x : 0  
-			* y : 0
-			* w : 4  
-			* h : 4
-			* color : "#56b286"
-		
-		shapes
-				
-		
-		
-	* circle : @!
-		
-		shapes.push! @
-		
-			* x : 0  
-			* y : 0
-			* w : 4  
-			* h : 4
-			* color: "#56b286"		
-
-	
-	
-	square: @
-
-		new: ! @
-			x:0  y:0
-			w:4  h:4
-			color: "#56b286"			
-			
-			@! area:
-				w * h
-	
-	
-		
-	name: "shapes"
-	
-	
-:::::::::::::::::::::::::::::::::::::::::::::::::	
-
-
-@ painter:
-
-	shapes: &
-	
-	* @! square: 
-		shapes + @
-			* x:0  
-			* y:0
-			* w:4  
-			* h:4
-			* color: "#56b286"
-		
-
-	* @! circle
 
 
 

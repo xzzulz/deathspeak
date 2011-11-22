@@ -444,6 +444,33 @@ b: obj.#a 					:: b is set to 1
 
 
 :::::::::::::::::::::::::::
+:: getters & setters
+
+:: getter
+
+	@!<-
+
+:: setters 
+
+	@!->
+
+:: Example:
+
+obj: @
+	a: 0
+	
+	*a: @!->	
+		*a = #				
+
+	*a: @!<-
+		^ a
+
+
+obj.a.>
+
+
+
+:::::::::::::::::::::::::::
 :: pseudo pattern matching
 
 :: factorial
