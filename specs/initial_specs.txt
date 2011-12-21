@@ -161,9 +161,9 @@ colors <>
 
 :: binary:
 
-'&
-'%
-'><
+|&|
+|%|
+|><|
 
 
 
@@ -180,12 +180,15 @@ colors <>
 
 :: execution:
 
-expr1 ! expr2
+expr1 ! expr2 
 
 :: expr1 must be or eval to a function, then is executed and
 :: if expr2 is provided, is passed as a parameter, accesable 
 :: inside the function with #. 
 :: last expression is returned, or at the ^ symbol.
+:: If the next expression is not intended to be the function
+:: argument, it should be separated with a comma.
+
 
 :: Examples
 
@@ -265,9 +268,9 @@ expr1 @! expr2
 
 m: @! 
 	a: 2 
-	* b: 1 
-	~ c: 3 
-	_ d: 4 
+	*b: 1 
+	~c: 3 
+	_d: 4 
 
 
 
@@ -288,7 +291,7 @@ obj: @
 
 	a: 0
 		
-	a.!: a++
+	.!a: a++
 
 
 val: obj.!a
@@ -301,7 +304,7 @@ obj.a :! 5
 
 :: The setter operator allows to define a setter
 :: method for an object property, and to access
-:: the setter to set the property value
+:: the setter to set the property value.
 
 :: Example
 
@@ -309,7 +312,7 @@ obj: @
 
 	a: 0
 		
-	a:! : 
+	:!a: 
 		a: #++
 
 
@@ -318,22 +321,22 @@ obj.a :! 4
 
 
 :::::::::::::::::::::::::::
-:: chaining methods operator
+:: chained method operator
 
 	..
 
-:: the chaining methods operator, allows to call 
-:: multiple methods on an object. 
+:: the chained method operator, allows to call 
+:: multiple methods on the same object. 
 :: The sucessive methods are not required to return 
-:: the original object. 
-:: The chaining operator work on the original
-:: object, independently of the previous method return 
-:: value.
-:: 
+:: the original object. The chain operator work on the 
+:: original object, independently of the previous 
+:: method return value.
+:: Is valid to place other expressions in between the
+:: chained methods.
  
 :: Example
 
-obj ..met1.retrn_met ..met2 ..met3
+obj ..met1! .non_chained_method! ..met2! ..met3!
 
 
 
