@@ -120,24 +120,42 @@ a=1 ?
 :::::::::::::::::::::::::::
 :: loops
 
-	expr1 <> expr2
+:: expr1 is boolean, loops expr2 while expr1 is true.
 
-:: if expr1 is boolean, loops expr2 while expr1 is true.
-:: if expr1 is a number n, loops expr2 n times.
-:: if expr1 is an array, loop over each element of the array
-:: if expr1 is an object, loop over object own properties 
+	expr1 ?<> expr2
 
-:: for numeric loops, #- is the index
-:: for array loops, #- is the key, #* is the value
-:: for objects loops, #- is the key, #* is the value
+
+:: expr1 is a number n, loops expr2 n times.
+:: inside expr2 <#> is the current value of expr1
+
+	expr1 #<> expr2
+
+
+:: expr1 is an array, loop over each element of the array
+:: inside expr2 the current key and value of the array are:
+:: <#> is the key
+:: <&> is the value
+
+	expr1 &<> expr2
+
+
+
+
+:: expr1 is an object, loop over object own properties 
+:: inside expr2 the current key and value of the array are:
+:: <#> is the key
+:: <@> is the value
+
+	expr1 @<> expr2
+
 
 :: Example
 
-colors: `-blue-red-green-yellow
+colors: &'-blue-red-green-yellow
 
 colors <> 
-	key: #-
-	color: #*
+	key: <#>
+	color: <&>
 
 
 
