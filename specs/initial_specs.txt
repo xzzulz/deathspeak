@@ -11,7 +11,7 @@
 
 	+ -
 
-:: true	+
+:: true		+
 :: false 	-
 
 Example
@@ -44,23 +44,6 @@ values: &
 	- c
 
 numbers: &-1-2-3
-
-
-:: array of strings:
-
-	&$-
-	
-:: starting with &$ means that arrays elements will be
-:: interpreted as strings (white space at both ends is trimmed)
-
-colors: &$
-	- red
-	- green
-	- blue
-
-:: is the same as:
-
-colors: -"red"-"green"-"blue"
 
 
 
@@ -163,7 +146,7 @@ colors <>
 
 :: math
 
-`+ `- `* `/
+.+ .- .* ./
  
 :: equality
 
@@ -178,9 +161,9 @@ colors <>
 
 :: binary:
 
-`&
-`%
-`><
+'&
+'%
+'><
 
 
 
@@ -229,20 +212,20 @@ g: ! #a + #b
 :: inside the object blok, these rules apply:
 
 :: - vars definitions are properties of the object
-:: - public identifiers are preceded with an *
-:: - private identifiers are preceded with nothing
-:: - private and public are separated namespaces
-::   that means that there can be private vars with the
+:: - public identifiers are preceded with nothing
+:: - private identifiers are preceded an *
+:: - private and public are separated namespaces.
+::   there can be private vars with the
 ::   same name than public ones
 
 
 :: Example:
 
 robot: @ 
-	* name: "bot"
-	* color: "blue"
-	* speed: 10				
-	password: "oil"
+	name: "bot"
+	color: "blue"
+	speed: 10				
+	*password: "oil"
 	
 	
 	
@@ -290,8 +273,67 @@ m: @!
 
 
 
+:::::::::::::::::::::::::::
+:: getter
+
+	.!
+
+:: The getter operator allows to define a getter
+:: method for an object property, and to
+:: access it
+
+:: Example
+
+obj: @
+
+	a: 0
+		
+	a.!: a++
 
 
+val: obj.!a
+
+
+:::::::::::::::::::::::::::
+:: setter 
+
+obj.a :! 5
+
+:: The setter operator allows to define a setter
+:: method for an object property, and to access
+:: the setter to set the property value
+
+:: Example
+
+obj: @
+
+	a: 0
+		
+	a:! : 
+		a: #++
+
+
+obj.a :! 4
+
+
+
+:::::::::::::::::::::::::::
+:: chaining methods operator
+
+	..
+
+:: the chaining methods operator, allows to call 
+:: multiple methods on an object. 
+:: The sucessive methods are not required to return 
+:: the original object. 
+:: The chaining operator work on the original
+:: object, independently of the previous method return 
+:: value.
+:: 
+ 
+:: Example
+
+obj ..met1.retrn_met ..met2 ..met3
 
 
 
