@@ -10,6 +10,7 @@
 :: booleans
 
 	+ -
+ [+} [-]
 
 :: true		+
 :: false 	-
@@ -337,15 +338,15 @@ m: @!
 
 
 :::::::::::::::::::::::::::
-:: getter REMOVE
+:: getter 
 
-	.!
+	.!   NO
 
 :: The getter operator allows to define a getter
 :: method for an object property, and to
 :: access it
 
-:: Example
+:: Example     NO
 
 obj: @
 
@@ -353,20 +354,25 @@ obj: @
 		
 	.!a: a++
 
+:: better syntax
 
-val: obj.!a
+  x:{a}
+  
+:: calls method a with no par
+
+
 
 
 :::::::::::::::::::::::::::
-:: setter REMOVE
+:: setter 
 
-obj.a :! 5
+obj.a :! 5     NO
 
 :: The setter operator allows to define a setter
 :: method for an object property, and to access
 :: the setter to set the property value.
 
-:: Example
+:: Example     NO
 
 obj: @
 
@@ -377,6 +383,15 @@ obj: @
 
 
 obj.a :! 4
+
+
+:: better syntax
+
+  {a}:2
+  
+:: calls method a with par 2
+:: method return value is stored in *a
+
 
 
 
