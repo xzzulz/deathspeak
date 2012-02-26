@@ -47,6 +47,18 @@ numbers: &-1-2-3
 
 
 
+:::::::::::::::::::::::::::
+:: expression separator NO
+
+	|
+	
+:: mark the separation of two expressions
+
+:: Example
+
+a! | b! | c!
+
+
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: comments 
@@ -120,6 +132,21 @@ a=1 ?
 :::::::::::::::::::::::::::
 :: loops
 
+:: consider
+:: apply function to all states of an iteration
+:: this includes both initial and final state
+:: one of which is left out in normal iterations
+:: of the type: 
+:: apply function -> move to next iteration -> test condition to continue iterating
+
+:: another thing very useful in iterations of arrays:
+iterate from element index 3, including or not including it,
+and leave the first element of iteration out.
+Something to express things like that
+
+
+
+
 :: expr1 is boolean, loops expr2 while expr1 is true.
 
 	expr1 ?<> expr2
@@ -140,9 +167,8 @@ a=1 ?
 
 
 
-
 :: expr1 is an object, loop over object own properties 
-:: inside expr2 the current key and value of the array are:
+:: inside expr2 the current key and value are:
 :: <#> is the key
 :: <@> is the value
 
@@ -173,13 +199,13 @@ colors <>
 
 :: logical:
 
-& and
-% or
->< not
+.& and
+.% or
+.>< not
 
 :: binary:
 
-|&|
+.&.
 |%|
 |><|
 
@@ -189,6 +215,11 @@ colors <>
 :: functions 
 
 	!
+
+:: (?)
+
+go!!
+go!4
 
 :: creation:
 
@@ -205,8 +236,9 @@ expr1 ! expr2
 :: inside the function with #. 
 :: last expression is returned, or at the ^ symbol.
 :: If the next expression is not intended to be the function
-:: argument, it should be separated with a comma.
+:: argument, it should be separated with a comma.(?)
 
+:: ^ before or after
 
 :: Examples
 
@@ -217,6 +249,16 @@ f!
 g: ! #a + #b
 
 
+:::::::::::::::::::::::::::
+:: forward
+
+:: experimental
+
+open! -> read! -> process! -> write!
+
+
+
+     
 
 
 :::::::::::::::::::::::::::
@@ -276,8 +318,8 @@ expr1 @! expr2
 
 :: - variables referred are instance vars from the object
 :: - _ preceded vars are method scoped vars
-:: - * preceded vars are public vars of the object
-:: - nothing preceded vars are private vars of the object
+:: - * preceded vars are private vars of the object
+:: - nothing preceded vars are public vars of the object
 :: - ~ preceded, are public vars from the guest object
 :: - *@ refer to the object (bound this)
 :: - ~@ refer to guest object (js this)
@@ -295,7 +337,7 @@ m: @!
 
 
 :::::::::::::::::::::::::::
-:: getter
+:: getter REMOVE
 
 	.!
 
@@ -316,7 +358,7 @@ val: obj.!a
 
 
 :::::::::::::::::::::::::::
-:: setter 
+:: setter REMOVE
 
 obj.a :! 5
 
@@ -341,21 +383,30 @@ obj.a :! 4
 :::::::::::::::::::::::::::
 :: chained method operator
 
+:: experimental
+
 	..
 
 :: the chained method operator, allows to call 
 :: multiple methods on the same object. 
-:: The sucessive methods are not required to return 
-:: the original object. The chain operator work on the 
-:: original object, independently of the previous 
-:: method return value.
-:: Is valid to place other expressions in between the
-:: chained methods.
+:: call method on last object which had a method call
  
 :: Example
 
-obj ..met1! .non_chained_method! ..met2! ..met3!
+
+obj .open! file ..read! ..process! ..write!
+
+:: passing the returning values as parameter to the next
+:: with the forward op
+
+obj .open! file -> ..read! -> ..process! -> ..write!
 
 
 
+:::::::::::::::::::::::::::
+:: right assignment
+
+:: experimental
+
+  exp => var
 
