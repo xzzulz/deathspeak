@@ -10,8 +10,9 @@
 :: booleans
 
 	+ -
- [+} [-]
-
+ [+] [-]
+ %+ %-
+ 
 :: true		+
 :: false 	-
 
@@ -57,7 +58,7 @@ numbers: &-1-2-3
 
 :: Example
 
-a! | b! | c!
+a! | b! | c! NO
 
 
 
@@ -146,43 +147,63 @@ and leave the first element of iteration out.
 Something to express things like that
 
 
-
+:::: boolean loop
 
 :: expr1 is boolean, loops expr2 while expr1 is true.
 
 	expr1 ?<> expr2
+	expr1 <> expr2
 
 
-:: expr1 is a number n, loops expr2 n times.
+:::: numeric loop
+
+:: expr1 is a number range n, loops expr2 n times.
 :: inside expr2 <#> is the current value of expr1
 
-	expr1 #<> expr2
+	(expr1)<> expr2
 
+  (100)<>       :: 1 to 100
+  (0,100)<>     :: 0 to 100
+
+
+:::: array loop
 
 :: expr1 is an array, loop over each element of the array
 :: inside expr2 the current key and value of the array are:
 :: <#> is the key
-:: <&> is the value
+:: <-> is the value
 
-	expr1 &<> expr2
+	expr1 <> expr2
+
+  (arr)(2,-2)<>   
+
+  arr[2,-2] <>
+  arr[2,100] <>
 
 
+:::: object loop
 
 :: expr1 is an object, loop over object own properties 
 :: inside expr2 the current key and value are:
 :: <#> is the key
-:: <@> is the value
+:: <-> is the value
 
-	expr1 @<> expr2
+	{ expr1 }<> expr2
 
 
 :: Example
 
-colors: &'-blue-red-green-yellow
+colors: "&-blue-red-green-yellow
 
-colors <> 
+{colors}<> 
 	key: <#>
-	color: <&>
+	color: <->
+
+
+:: break and continue 
+
+<^> exit current iteration
+<^^> exit loop
 
 
 
@@ -247,11 +268,16 @@ f: ! a:2 b:1 a+b
 
 f! 
 	
-g: ! #a + #b
+sum: ! #a + #b
+
+:: alternate definition
+:: more readable but differs from normal assignment
+
+!sum #a + #b
 
 
 :::::::::::::::::::::::::::
-:: forward
+:: forward operator
 
 :: experimental
 
@@ -291,8 +317,18 @@ robot: @
 	speed: 10				
 	*password: "oil"
 	
+  
+:: alternate definition
+:: more readable but differs from normal assignment
 	
-	
+@robot  
+ 	name: "bot"
+	color: "blue"
+	speed: 10				
+	*password: "oil"
+  
+  
+   
 				
 :::::::::::::::::::::::::::
 :: methods 
@@ -409,7 +445,10 @@ obj.a :! 4
 :: Example
 
 
-obj .open! file ..read! ..process! ..write!
+obj .open! file 
+    ..read! 
+    ..process! 
+    ..write!
 
 :: passing the returning values as parameter to the next
 :: with the forward op
@@ -424,4 +463,10 @@ obj .open! file -> ..read! -> ..process! -> ..write!
 :: experimental
 
   exp => var
+
+:: evaluates exp and set var to the result 
+
+
+
+
 
