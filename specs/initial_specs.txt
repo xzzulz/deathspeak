@@ -151,8 +151,8 @@ Something to express things like that
 
 :: expr1 is boolean, loops expr2 while expr1 is true.
 
-	expr1 ?<> expr2
-	expr1 <> expr2
+	(expr1 ?)<> expr2
+
 
 
 :::: numeric loop
@@ -164,7 +164,7 @@ Something to express things like that
 
   (100)<>       :: 1 to 100
   (0,100)<>     :: 0 to 100
-
+  (a,b)<>     :: a to b
 
 :::: array loop
 
@@ -175,10 +175,16 @@ Something to express things like that
 
 	expr1 <> expr2
 
-  (arr)(2,-2)<>   
+  ( arr [] )<>   
 
-  arr[2,-2] <>
+  (arr[2,-2]) <>
   arr[2,100] <>
+
+colors: "&-blue-red-green-yellow
+
+(colors[])<> 
+	key: <#>
+	color: <->
 
 
 :::: object loop
@@ -188,16 +194,12 @@ Something to express things like that
 :: <#> is the key
 :: <-> is the value
 
-	{ expr1 }<> expr2
+	( expr1 @)<> expr2
 
 
 :: Example
 
-colors: "&-blue-red-green-yellow
 
-{colors}<> 
-	key: <#>
-	color: <->
 
 
 :: break and continue 
