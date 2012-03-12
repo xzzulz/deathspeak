@@ -11,6 +11,9 @@
 
 	+ -
  [+] [-]
+ 
+ (+) (-)
+ 
  %+ %-
  
 :: true		+
@@ -305,7 +308,7 @@ open! -> read! -> process! -> write!
 
 :: - vars definitions are properties of the object
 :: - public identifiers are preceded with nothing
-:: - private identifiers are preceded an *
+:: - private identifiers are preceded with an *
 :: - private and public are separated namespaces.
 ::   there can be private vars with the
 ::   same name than public ones
@@ -323,7 +326,7 @@ robot: @
 :: alternate definition
 :: more readable but differs from normal assignment
 	
-@robot  
+@ robot  
  	name: "bot"
 	color: "blue"
 	speed: 10				
@@ -345,8 +348,8 @@ robot: @
 
 :: execution:
 
-expr1 @!
-expr1 @! expr2
+expr1 !
+expr1 ! expr2
 
 :: expr1 must be or eval to a method, then is executed and
 :: if expr2 is provided, is passed as a parameter, accesable 
@@ -429,8 +432,10 @@ obj.a :! 4
   
 :: calls method a with par 2
 :: method return value is stored in *a
+:: if there is no method a, then just assign 
+:: given value to *a
 
-
+:: how to use with private vars??
 
 
 :::::::::::::::::::::::::::

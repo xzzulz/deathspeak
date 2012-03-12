@@ -1,13 +1,15 @@
+![deathspeak](http://nzonbi.github.com/deathspeak/deathspeak-w.svg)
 
-# okami
+# deathspeak
 
 stylized, compact and expressive programming language on top of  
 javascript, that does not follow common syntax preconcemptions,  
 for increased productivity.
 
-## alpha
 
-This project is in alpha status. Everything is under work
+## prealpha
+
+This project is in prealpha status. Everything is under work
 and may change.
 
 ## note
