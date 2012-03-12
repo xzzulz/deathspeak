@@ -15,7 +15,7 @@ and may change.
 
 ## note
 
-The okami language employs standard language features,  
+The deathspeak language employs standard language features,  
 but the syntax does not follow common convetions from other  
 languages, so it may not seems easy to read at first.  
 An special ide is planned, that will allow to learn the  
@@ -28,12 +28,12 @@ succinctly convey ideas. okami is based on the _subjetive_
 perception, that programming languages have left untapped  
 potential, in the expressive power of symbols.
 
-okami is an attemp to maximize representation of precise and  
+deathspeak is an attemp to maximize representation of precise and  
 clear concepts, with the expressive power of symbols. It is  
 also part of a research project in software design, with  
 goals that will be presented in the future.
 
-okami is built on top of javascript, because Javascript is  
+deathspeak is built on top of javascript, because Javascript is  
 rapidly becoming an impressive language, in terms of spread and  
 recently even in performance. And in its quirks, has many hidden  
 gems of expressive power. But suffers from historical baggage  
