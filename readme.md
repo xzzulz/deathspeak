@@ -8,10 +8,12 @@ javascript, that does not follow common syntax preconcemptions,
 for increased productivity.
 
 
-## prealpha
+## Programming language concept
 
-This project is in prealpha status. Everything is under work
-and may change.
+This project is an experimental concept design. The language is not
+going to be implemented. After experimenting with the syntax, it was
+found that the language is hard to read. Specially at first. With
+enough practice, it can works. But it doesn't seem practical.
 
 ## note
 
@@ -46,12 +48,12 @@ and of having to please everyone.
 * language based on simple, and precise concepts.
 * compiles to readable javascript.
 * work easily side by side with javascript.
-* syntax designed to maximize succintness and expressive power,
-  bypassing any preconceptions.
+* syntax based on symbols, designed to be compact, and maximize 
+  expressive power, bypassing any preconceptions.
 
 ### syntax goals
 
-okami syntax bypass any preconceptions, so it may not be
+deathspeak syntax bypass any preconceptions, so it may not be
 easy at first. it is designed with these goals:
 
 * compact: avoid syntax noise, repetition and thrash.
@@ -63,14 +65,11 @@ easy at first. it is designed with these goals:
 
 ## license
 
-open source license to be added soon
+MIT license
 
-## Introduction
 
-For now there is no introduction. Only the specs working  
-draft
 
-* More to be added
+
 
 
 
