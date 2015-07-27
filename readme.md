@@ -4,8 +4,7 @@
 # deathspeak
 
 Experimental syntax design for a stylized, compact and expressive
-programming language on top of javascript. Does not follow common
-syntax preconcemptions.
+programming language. Does not follow common syntax preconcemptions.
 
 
 ## Programming language concept
@@ -20,8 +19,6 @@ enough practice, it can works. But it doesn't seem practical.
 The deathspeak language employs standard language features,  
 but the syntax does not follow common convetions from other  
 languages, so it may not seems easy to read at first.  
-An special ide is planned, that will allow to learn the  
-language on the fly, at near zero cost.
 
 ## about
 
