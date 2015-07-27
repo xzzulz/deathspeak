@@ -3,9 +3,9 @@
 
 # deathspeak
 
-stylized, compact and expressive programming language on top of  
-javascript, that does not follow common syntax preconcemptions,  
-for increased productivity.
+Experimental syntax design for a stylized, compact and expressive
+programming language on top of javascript. Does not follow common
+syntax preconcemptions.
 
 
 ## Programming language concept
