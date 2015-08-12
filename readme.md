@@ -1,4 +1,4 @@
-![deathspeak](http://www.ozkeebo.com/stuff/img/deathspeak-w.svg)
+![deathspeak](http://nzonbi.github.io/deathspeak/deathspeak-w.svg)
 
 
 # deathspeak
